@@ -3,6 +3,12 @@ spring:
     oauth2:
       client:
         registration:
+
+          google:
+            client-id: 197334622192-2ohlkmq4gl71m3v4qttq3ub1erktco6j.apps.googleusercontent.com
+            client-secret: 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
+            scope: openid,profile,email
+
           naver:
             client-id: 9XYnNT__GZ_8Dd_rvUEI
             client-secret: 50usbXvvPp
@@ -20,28 +26,36 @@ spring:
 
     mvc:
       static-path-pattern: /static/**
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
-
   datasource:
-    url: jdbc:h2:mem:test # test 부분을 자신이 원하는 것으로 바꾸시면 됩니다.
-    username: sa # username과 password는 자신의 설정에 맞게
-    password:
-    driver-class-name: org.h2.Driver
+    url: jdbc:mysql://localhost:3306/news_data?autoReconnect=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Seoul # ??? db connection url
+    username: root       #  db username
+    password: 0008 #  db password
 
   jpa:
     hibernate:
       ddl-auto: create # 어플리케이션을 시작할 때 데이터베이스를 초기화하고 다시 테이블 생성
     properties:
       hibernate:
-        format_sql: true # 실행되는 query를 보여줌
+        format_sql: true # ??? ?? ?? SQL ? ?? ?? ???
+        show_sql: true # jpa ? hibernate ? ?? CRUD ? ?? ?? ?? CRUD ? SQL ? ???? ?? ??.
+        use_sql_comments: true
 
-logging.level:
-  org.hibernate.SQL: debug
+#logging.level:
+#  org.hibernate.SQL: debug
 
-jwt:
-  secretKey: and0LXRlc3QtYWxqamFiYWVnaS1qd3QtdGVzdC1hbGpqYWJhZWdpLWp3dC10ZXN0LWFsamphYmFlZ2ktand0LXRlc3QtYWxqamFiYWVnaS1qd3QtdGVzdC1hbGpqYWJhZWdpLWp3dC10ZXN0LWFsamphYmFlZ2ktand0LXRlc3QtYWxqamFiYWVnaS1qd3QtdGVzdC1hbGpqYWJhZWdp
-  expirationTime: 1800000 # 30분
 
+
+#  h2:
+#    console:
+#      enabled: true
+#      path: /h2-console
+#  datasource:
+#    url: jdbc:h2:mem:news_data # test 부분을 자신이 원하는 것으로 바꾸시면 됩니다.
+#    username: sa # username과 password는 자신의 설정에 맞게
+#    password:
+#    driver-class-name: org.h2.Driver
+
+
+chrome:
+  driverPath: /Users/yeopking/Programing/spring_study/collecting_data_news/chromedriver-mac-arm64_version_121/chromedriver
+  naverUrl: https://search.naver.com/search.naver?ssc=tab.news.all&where=news&sm=tab_jum&query=

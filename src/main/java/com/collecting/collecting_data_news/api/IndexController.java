@@ -24,10 +24,6 @@ public class IndexController {
 
             String userName = (String) attributes.get("name");
 
-            if (authenticationToken.getAuthorizedClientRegistrationId().equals("naver")) {
-                Map<String, Object> response = (Map) attributes.get("response");
-                userName = (String) response.get("name");
-            }
             model.addAttribute("user", userName);
         }
         return "index";

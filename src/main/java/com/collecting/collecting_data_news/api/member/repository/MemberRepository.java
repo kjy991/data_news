@@ -12,4 +12,7 @@ import java.util.Optional;
 public interface MemberRepository extends JpaRepository<Member, Long>, MemberRepositoryCustom {
 
 
+    Optional<Member> findByOauthTypeAndOauthId(String oAuthType, String oAuthId);
+
+    Optional<Member> findByOauthId(String oAuthId);
 }

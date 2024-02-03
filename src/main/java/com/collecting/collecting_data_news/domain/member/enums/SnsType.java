@@ -1,20 +1,20 @@
 package com.collecting.collecting_data_news.domain.member.enums;
 
+import com.collecting.collecting_data_news.common.exception.BusinessException;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.tripcoach.core.common.enumType.Constant;
-import com.tripcoach.core.common.exception.exception.BusinessException;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import java.util.Arrays;
 
-import static com.tripcoach.core.common.apiresult.comcode.ComCode.CONVERT_ENUM_FAIL;
+import static com.collecting.collecting_data_news.common.apiresult.comcode.ComCode.CONVERT_ENUM_FAIL;
 
 
-public enum SnsType implements Constant {
+public enum SnsType  {
     KAKAO("KAKAO"),
     GOOGLE("GOOGLE"),
     APPLE("APPLE");
 
-
+    @JsonValue
     private final String label;
 
     SnsType(String label) {

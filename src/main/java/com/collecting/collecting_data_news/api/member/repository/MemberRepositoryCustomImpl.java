@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 import java.util.Optional;
 
-import static com.collecting.collecting_data_news.domain.QMember.member;
+import static com.collecting.collecting_data_news.domain.member.entity.QMember.member;
 
 
 @RequiredArgsConstructor
@@ -20,15 +20,16 @@ public class MemberRepositoryCustomImpl implements MemberRepositoryCustom {
 
     @Override
     public Optional<Member> findBySnsIdAndSnsType(String snsId, SnsType snsType) {
-        return Optional.ofNullable(queryFactory
-                .select(member)
-                .from(member)
-                .where(
-                        member.snsType.eq(snsType),
-                        member.snsId.eq(snsId)
-                )
-                .fetchOne())
-                ;
+        return null;
+//        return Optional.ofNullable(queryFactory
+//                .select(member)
+//                .from(member)
+//                .where(
+//                        member.snsType.eq(snsType),
+//                        member.snsId.eq(snsId)
+//                )
+//                .fetchOne())
+//                ;
     }
 
 }
