@@ -1,7 +1,8 @@
 package com.collecting.collecting_data_news.domain.news;
 
 import com.collecting.collecting_data_news.common.entity.BaseTimeEntity;
-import com.collecting.collecting_data_news.domain.keyword.Keyword;
+import com.collecting.collecting_data_news.domain.keyword.entity.Keyword;
+import com.collecting.collecting_data_news.domain.mynews.enums.SearchNewspaper;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

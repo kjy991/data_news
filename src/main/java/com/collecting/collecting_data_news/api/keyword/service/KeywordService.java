@@ -2,7 +2,7 @@ package com.collecting.collecting_data_news.api.keyword.service;
 
 import com.collecting.collecting_data_news.api.keyword.repository.KeywordRepository;
 import com.collecting.collecting_data_news.common.exception.BusinessException;
-import com.collecting.collecting_data_news.domain.keyword.Keyword;
+import com.collecting.collecting_data_news.domain.keyword.entity.Keyword;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

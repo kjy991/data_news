@@ -47,6 +47,7 @@ public class SecurityConfig {
 
                                         )
                                         .loginPage("/")
+                                        .defaultSuccessUrl("/")
                         )
                         .build();
     }

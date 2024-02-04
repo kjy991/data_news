@@ -1,7 +1,7 @@
 package com.collecting.collecting_data_news.selenium.dto;
 
-import com.collecting.collecting_data_news.api.keyword.dto.KeywordDto;
-import com.collecting.collecting_data_news.domain.news.SearchNewspaper;
+import com.collecting.collecting_data_news.domain.keyword.dto.KeywordDto;
+import com.collecting.collecting_data_news.domain.mynews.enums.SearchNewspaper;
 import lombok.Data;
 
 @Data

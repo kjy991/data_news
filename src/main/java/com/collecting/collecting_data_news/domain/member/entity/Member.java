@@ -1,6 +1,8 @@
 package com.collecting.collecting_data_news.domain.member.entity;
 
 import com.collecting.collecting_data_news.common.entity.BaseTimeEntity;
+import com.collecting.collecting_data_news.domain.mykeyword.entity.MyKeyword;
+import com.collecting.collecting_data_news.domain.mynews.entity.MyNews;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -46,8 +48,17 @@ public class Member extends BaseTimeEntity {
     @OneToMany(mappedBy = "member")
     List<MyKeyword> myKeywords = new ArrayList<>();
 
+    @Builder.Default
+    @OneToMany(mappedBy = "member")
+    List<MyNews> myNews = new ArrayList<>();
+
     public void addMyKeywords(MyKeyword myKeyword) {
         myKeyword.setMember(this);
         this.myKeywords.add(myKeyword);
+    }
+
+    public void addMyNews(MyNews savedMyNews) {
+        savedMyNews.setMember(this);
+        this.myNews.add(savedMyNews);
     }
 }

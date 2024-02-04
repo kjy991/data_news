@@ -1,4 +1,4 @@
-package com.collecting.collecting_data_news.domain.news;
+package com.collecting.collecting_data_news.domain.mynews.enums;
 
 import com.collecting.collecting_data_news.common.exception.BusinessException;
 import com.fasterxml.jackson.annotation.JsonCreator;

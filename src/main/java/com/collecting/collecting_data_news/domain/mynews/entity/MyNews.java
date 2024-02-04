@@ -1,7 +1,8 @@
-package com.collecting.collecting_data_news.domain.member.entity;
+package com.collecting.collecting_data_news.domain.mynews.entity;
 
 import com.collecting.collecting_data_news.common.entity.BaseTimeEntity;
-import com.collecting.collecting_data_news.domain.keyword.Keyword;
+import com.collecting.collecting_data_news.domain.member.entity.Member;
+import com.collecting.collecting_data_news.domain.mynews.enums.SearchNewspaper;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,9 +17,9 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"member_idx", "keyword_idx"})})
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"member_idx", "searchNewspaper"})})
 @Entity
-public class MyKeyword extends BaseTimeEntity {
+public class MyNews extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -30,15 +31,14 @@ public class MyKeyword extends BaseTimeEntity {
     @Comment("유저 인덱스")
     private Member member;
 
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "keyword_idx")
-    @Comment("키워드 인덱스")
-    private Keyword keyword;
+    @Enumerated(EnumType.STRING)
+    @Comment("검색할 신문사")
+    private SearchNewspaper searchNewspaper;
 
-    public static MyKeyword toEntity(Member member, Keyword keyword) {
-        return MyKeyword.builder()
+    public static MyNews toEntity(Member member, SearchNewspaper searchNewspaper) {
+        return MyNews.builder()
                 .member(member)
-                .keyword(keyword)
+                .searchNewspaper(searchNewspaper)
                 .build();
     }
 

@@ -1,6 +1,6 @@
 package com.collecting.collecting_data_news.selenium.service;
 
-import com.collecting.collecting_data_news.api.keyword.dto.KeywordDto;
+import com.collecting.collecting_data_news.domain.keyword.dto.KeywordDto;
 import com.collecting.collecting_data_news.selenium.dto.DataCollectedDto;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
@@ -17,7 +17,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.collecting.collecting_data_news.domain.news.SearchNewspaper.*;
+import static com.collecting.collecting_data_news.domain.mynews.enums.SearchNewspaper.*;
 import static com.collecting.collecting_data_news.selenium.elements.HtmlElements.HREF;
 import static com.collecting.collecting_data_news.selenium.elements.SeleniumFindElements.*;
 

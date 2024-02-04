@@ -1,4 +1,4 @@
-package com.collecting.collecting_data_news.domain.keyword;
+package com.collecting.collecting_data_news.domain.keyword.entity;
 
 import com.collecting.collecting_data_news.common.entity.BaseTimeEntity;
 import jakarta.persistence.*;

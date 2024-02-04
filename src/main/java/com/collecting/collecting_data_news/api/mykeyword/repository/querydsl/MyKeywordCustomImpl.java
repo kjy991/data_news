@@ -1,18 +1,17 @@
 package com.collecting.collecting_data_news.api.mykeyword.repository.querydsl;
 
 
-import com.collecting.collecting_data_news.api.mykeyword.dto.MyKeywordRespDto;
-import com.collecting.collecting_data_news.api.mykeyword.dto.QMyKeywordRespDto;
+import com.collecting.collecting_data_news.domain.mykeyword.dto.MyKeywordRespDto;
 import com.collecting.collecting_data_news.domain.member.entity.Member;
-import com.collecting.collecting_data_news.domain.member.entity.QMember;
+import com.collecting.collecting_data_news.domain.mykeyword.dto.QMyKeywordRespDto;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
-import static com.collecting.collecting_data_news.domain.keyword.QKeyword.keyword;
+import static com.collecting.collecting_data_news.domain.keyword.entity.QKeyword.keyword;
 import static com.collecting.collecting_data_news.domain.member.entity.QMember.*;
-import static com.collecting.collecting_data_news.domain.member.entity.QMyKeyword.myKeyword;
+import static com.collecting.collecting_data_news.domain.mykeyword.entity.QMyKeyword.myKeyword;
 
 
 @RequiredArgsConstructor

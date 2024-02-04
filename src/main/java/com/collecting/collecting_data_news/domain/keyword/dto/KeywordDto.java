@@ -1,6 +1,7 @@
-package com.collecting.collecting_data_news.api.keyword.dto;
+package com.collecting.collecting_data_news.domain.keyword.dto;
 
-import com.collecting.collecting_data_news.domain.keyword.Keyword;
+import com.collecting.collecting_data_news.domain.keyword.entity.Keyword;
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -15,13 +16,10 @@ public class KeywordDto {
         this.word = word;
     }
 
+    @QueryProjection
     public KeywordDto(Keyword keyword) {
         this.idx = keyword.getIdx();
         this.word = keyword.getWord();
     }
 
-    public KeywordDto(KeywordDto keywordDto) {
-        this.idx = keywordDto.idx;
-        this.word = keywordDto.word;
-    }
 }
