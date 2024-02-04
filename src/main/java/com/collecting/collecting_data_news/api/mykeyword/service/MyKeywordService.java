@@ -1,6 +1,7 @@
 package com.collecting.collecting_data_news.api.mykeyword.service;
 
 import com.collecting.collecting_data_news.api.keyword.service.KeywordService;
+import com.collecting.collecting_data_news.api.mykeyword.dto.MyKeywordRespDto;
 import com.collecting.collecting_data_news.api.mykeyword.repository.MyKeywordRepository;
 import com.collecting.collecting_data_news.common.apiresult.dto.ApiResult;
 import com.collecting.collecting_data_news.common.exception.BusinessException;
@@ -12,10 +13,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
-import static com.collecting.collecting_data_news.common.apiresult.comcode.ComCode.ALREADY_SAVED_KEYWORD;
-import static com.collecting.collecting_data_news.common.apiresult.comcode.ComCode.SUCCESS_CODE;
+import static com.collecting.collecting_data_news.common.apiresult.comcode.ComCode.*;
 import static com.collecting.collecting_data_news.common.apiresult.response.ApiResponse.success;
 
 
@@ -40,12 +41,18 @@ public class MyKeywordService {
         MyKeyword savedMyKeyword = myKeywordRepository.save(MyKeyword.toEntity(member, keyword));
         member.addMyKeywords(savedMyKeyword);
 
-        return success(true, "검색어가 저장 되었습니다.", SUCCESS_CODE);
+        return success(true, SAVED_KEYWORD, SUCCESS_CODE);
     }
 
     public ApiResult<?> myKeywordList() {
         Member member = authFunction.getOauthId();
+        List<MyKeywordRespDto> result = myKeywordRepository.myKeywordList(member);
+        return success(result, SUCCESS, SUCCESS_CODE);
+    }
 
-        return null;
+    @Transactional
+    public ApiResult<?> myKeywordDelete(Long idx) {
+        myKeywordRepository.deleteById(idx);
+        return success(true, SUCCESS, SUCCESS_CODE);
     }
 }

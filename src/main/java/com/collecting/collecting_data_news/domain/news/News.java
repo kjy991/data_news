@@ -16,6 +16,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"searchNewspaper", "newspaper", "title"})})
 @Entity
 public class News extends BaseTimeEntity {
 
@@ -28,6 +29,10 @@ public class News extends BaseTimeEntity {
     @JoinColumn(name = "keyword_idx")
     @Comment("키워드 인덱스")
     private Keyword keyword;
+
+    @Enumerated(EnumType.STRING)
+    @Comment("검색할 신문사")
+    private SearchNewspaper searchNewspaper;
 
     @Comment("신문사")
     private String newspaper;

@@ -33,7 +33,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create # 어플리케이션을 시작할 때 데이터베이스를 초기화하고 다시 테이블 생성
+      ddl-auto: update # 어플리케이션을 시작할 때 데이터베이스를 초기화하고 다시 테이블 생성
     properties:
       hibernate:
         format_sql: true # ??? ?? ?? SQL ? ?? ?? ???
@@ -59,3 +59,4 @@ spring:
 chrome:
   driverPath: /Users/yeopking/Programing/spring_study/collecting_data_news/chromedriver-mac-arm64_version_121/chromedriver
   naverUrl: https://search.naver.com/search.naver?ssc=tab.news.all&where=news&sm=tab_jum&query=
+  daumUrl: https://search.daum.net/search?w=news&nil_search=btn&DA=NTB&enc=utf8&cluster=y&cluster_page=1&q=

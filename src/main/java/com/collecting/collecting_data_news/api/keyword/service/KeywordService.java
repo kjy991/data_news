@@ -1,22 +1,15 @@
 package com.collecting.collecting_data_news.api.keyword.service;
 
 import com.collecting.collecting_data_news.api.keyword.repository.KeywordRepository;
-import com.collecting.collecting_data_news.api.mykeyword.repository.MyKeywordRepository;
-import com.collecting.collecting_data_news.common.apiresult.dto.ApiResult;
 import com.collecting.collecting_data_news.common.exception.BusinessException;
-import com.collecting.collecting_data_news.common.function.AuthFunction;
 import com.collecting.collecting_data_news.domain.keyword.Keyword;
-import com.collecting.collecting_data_news.domain.member.entity.Member;
-import com.collecting.collecting_data_news.domain.member.entity.MyKeyword;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-import static com.collecting.collecting_data_news.common.apiresult.comcode.ComCode.ALREADY_SAVED_KEYWORD;
-import static com.collecting.collecting_data_news.common.apiresult.comcode.ComCode.SUCCESS_CODE;
-import static com.collecting.collecting_data_news.common.apiresult.response.ApiResponse.success;
+import static com.collecting.collecting_data_news.common.function.UtilityFunction.isValidString;
 
 
 @Transactional(readOnly = true)
@@ -27,7 +20,11 @@ public class KeywordService {
 
     @Transactional
     public Keyword addKeyword(String keyword) {
-        Optional<Keyword> optionalKeyword = keywordRepository.findByKeyword(keyword);
+        if (!isValidString(keyword)) {
+            throw new BusinessException("특수문자 & 기호는 저장이 안됩니다.");
+        }
+
+        Optional<Keyword> optionalKeyword = keywordRepository.findByWord(keyword);
         Keyword savedKeyword;
 
         if (optionalKeyword.isEmpty()) {

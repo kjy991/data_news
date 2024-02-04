@@ -17,6 +17,7 @@ public class ComCode {
     public final static String AUTH_FAIL = "인증에 실패했습니다.";
     public final static int AUTH_FAIL_CODE = 401; // 인증 실패
 
+    public final static String SAVED_KEYWORD = "검색어가 저장 되었습니다.";
     public final static String ALREADY_SAVED_KEYWORD = "이미 저장된 키워드 입니다.";
     public final static String CONVERT_ENUM_FAIL = " -> ENUM 변환 실패 했습니다";
 

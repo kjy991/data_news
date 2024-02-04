@@ -47,9 +47,7 @@ public class SecurityConfig {
 
                                         )
                                         .loginPage("/")
-                                        .defaultSuccessUrl("/home", true)
                         )
-
                         .build();
     }
 
