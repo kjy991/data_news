@@ -15,5 +15,10 @@ public class SeleniumFindElements {
     public static final String DAUM_NEWS_NEWSPAPER = ".c-tit-doc .tit_item";
     public static final String DAUM_NEWS_CONTENT = ".c-item-content .item-title a";
 
+    public static final String GOOGLE_NEWS_ELEMENTS_LIST = "article.IFHyqb";
 
+    public static final String GOOGLE_NEWS_NEWSPAPER = "vr1PYe";
+    public static final String GOOGLE_NEWS_CONTENT = "JtKRv";
+    public static final String HREF ="href";
+    public static final String GOOGLE_NEWS_URL ="https://news.google.com";
 }

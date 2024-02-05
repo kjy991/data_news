@@ -13,6 +13,7 @@ import static com.collecting.collecting_data_news.common.apiresult.comcode.ComCo
 public enum SearchNewspaper {
     NAVER("NAVER", "네이버"),
     DAUM("DAUM", "다음"),
+    GOOGLE("GOOGLE", "구글"),
     ;
 
     @JsonValue

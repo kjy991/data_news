@@ -1,11 +1,8 @@
 package com.collecting.collecting_data_news.api.mynews.controller;
 
-import com.collecting.collecting_data_news.api.mykeyword.service.MyKeywordService;
 import com.collecting.collecting_data_news.api.mynews.service.MyNewsService;
 import com.collecting.collecting_data_news.common.apiresult.dto.ApiResult;
-import com.collecting.collecting_data_news.domain.mynews.entity.MyNews;
 import com.collecting.collecting_data_news.domain.mynews.enums.SearchNewspaper;
-import com.collecting.collecting_data_news.scheduler.CollectingNewsDataScheduler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
