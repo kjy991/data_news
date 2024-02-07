@@ -30,7 +30,6 @@ public class GoogleAbstractWebDriver extends AbstractWebDriver implements WebDri
     @Value("${chrome.googleUrl}")
     private String GOOGLE_URL;
 
-
     public List<DataCollectedDto> googleProcess(List<KeywordDto> keywords) {
         return process(keywords);
     }
@@ -47,10 +46,7 @@ public class GoogleAbstractWebDriver extends AbstractWebDriver implements WebDri
 
         return newsElements.parallelStream()
                 .map(newsElement -> {
-                    // Get newspaper information
                     String newspaper = newsElement.findElement(By.className(GOOGLE_NEWS_NEWSPAPER)).getText();
-
-                    // Get article title and link
                     WebElement titleElement = newsElement.findElement(By.className(GOOGLE_NEWS_CONTENT));
                     String title = titleElement.getText();
                     String href = titleElement.getAttribute(HREF);

@@ -6,6 +6,7 @@ import com.collecting.collecting_data_news.domain.mynews.dto.QMyNewsRespDto;
 import com.collecting.collecting_data_news.domain.mynews.entity.MyNews;
 import com.collecting.collecting_data_news.domain.mynews.entity.QMyNews;
 import com.collecting.collecting_data_news.domain.mynews.enums.SearchNewspaper;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
@@ -41,5 +42,14 @@ public class MyNewsCustomImpl implements MyNewsCustom {
                 .from(myNews)
                 .innerJoin(myNews.member, member)
                 .fetch();
+    }
+
+    private BooleanExpression findSearchNewsPaper(List<Long> blockMembers) {
+        if (blockMembers == null || blockMembers.isEmpty()) {
+            return null;
+        } else {
+            return member.idx.notIn(blockMembers);
+        }
+
     }
 }

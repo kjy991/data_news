@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <div th:replace="~{fragments/config.html :: config}"></div>
+</head>
+<body>
+
+<div th:replace="~{fragments/menu.html :: menu}"></div>
+
+
+<div class="container" style="margin-bottom: 10px; width: 80%;">
+
+    <h1>뉴스 수집 목록</h1>
+    <div th:each="newspaperGroup : ${totalNews}" class="row mb-4">
+        <div class="col">
+            <a th:href="@{'/news/info/' + ${newspaperGroup.key}}">
+                <h2 th:text="'수집 사이트: ' + ${newspaperGroup.key}"></h2>
+            </a>
+
+            <div th:each="keywordGroup : ${newspaperGroup.value}">
+                <h4 th:text="'저장된 키워드: ' + ${keywordGroup.key}"></h4>
+
+                <div th:each="news : ${keywordGroup.value}">
+                    <div class="card mb-2">
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${news.newspaper}"></h5>
+                            <a th:href="${news.href}" class="card-link" th:text="${news.title}"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div th:replace="~{fragments/footer.html :: footer}"></div>
+</div> <!-- /container -->
+</body>
+</html>
+
+<script type="text/javascript">
+</script>

@@ -28,7 +28,6 @@ public class DaumAbstractWebDriver extends AbstractWebDriver implements WebDrive
     @Value("${chrome.daumUrl}")
     private String DAUM_URL;
 
-
     public List<DataCollectedDto> daumProcess(List<KeywordDto> keywords) {
         return process(keywords);
     }
@@ -37,7 +36,6 @@ public class DaumAbstractWebDriver extends AbstractWebDriver implements WebDrive
     protected String getNewsUrl() {
         return DAUM_URL;
     }
-
 
     @Override
     public synchronized List<DataCollectedDto> getDataList(KeywordDto keyword) {

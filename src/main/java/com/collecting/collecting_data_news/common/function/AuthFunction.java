@@ -15,7 +15,7 @@ import static com.collecting.collecting_data_news.common.apiresult.comcode.ComCo
 public class AuthFunction {
     private final MemberRepository memberRepository;
 
-    public Member getOauthId() {
+    public Member getMember() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String oauthId = auth.getName();
         return memberRepository.findByOauthId(oauthId)

@@ -1,6 +1,5 @@
 package com.collecting.collecting_data_news.selenium;
 
-import com.collecting.collecting_data_news.api.keyword.dto.KeywordDto;
 import com.collecting.collecting_data_news.scheduler.NewsDataJdbcRepository;
 import com.collecting.collecting_data_news.selenium.dto.DataCollectedDto;
 import org.junit.jupiter.api.Test;
@@ -18,15 +17,13 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
-import static com.collecting.collecting_data_news.domain.news.SearchNewspaper.*;
-import static com.collecting.collecting_data_news.selenium.elements.HtmlElements.HREF;
+import static com.collecting.collecting_data_news.domain.mynews.enums.SearchNewspaper.*;
 import static com.collecting.collecting_data_news.selenium.elements.SeleniumFindElements.*;
 
 @SpringBootTest
-class WebDriverUtilTest {
+class AbstractWebDriverTest {
     private static WebDriver driver;
     @Autowired
 

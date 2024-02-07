@@ -1,7 +1,6 @@
 package com.collecting.collecting_data_news.selenium.service;
 
-import com.collecting.collecting_data_news.api.keyword.dto.KeywordDto;
-import com.collecting.collecting_data_news.scheduler.NewsDataJdbcRepository;
+import com.collecting.collecting_data_news.domain.keyword.dto.KeywordDto;
 import com.collecting.collecting_data_news.selenium.dto.DataCollectedDto;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
@@ -12,20 +11,39 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.collecting.collecting_data_news.selenium.elements.HtmlElements.HREF;
 import static com.collecting.collecting_data_news.selenium.elements.SeleniumFindElements.*;
 
-class DaumWebDriverUtilTest {
+@SpringBootTest
+class DaumAbstractWebDriverTest {
     private static WebDriver driver;
 
     private String DAUM_URL = "https://search.daum.net/search?w=news&nil_search=btn&DA=NTB&enc=utf8&cluster=y&cluster_page=1&q=";
     private String CHROME_DRIVER_PATH = "/Users/yeopking/Programing/spring_study/collecting_data_news/chromedriver-mac-arm64_version_121/chromedriver";
+
+    @Autowired
+    DaumAbstractWebDriver daumAbstractWebDriver;
+
+    @Test
+    public void test() {
+        List<KeywordDto> keywords = Arrays.asList(
+                new KeywordDto(1L, "코스닥"),
+                new KeywordDto(5L, "과학"),
+                new KeywordDto(6L, "안녕"),
+                new KeywordDto(7L, "나스닥"),
+                new KeywordDto(8L, "부자")
+        );
+
+        List<DataCollectedDto> dataCollectedDtoList = daumAbstractWebDriver.daumProcess(keywords);
+        for (DataCollectedDto dataCollectedDto : dataCollectedDtoList) {
+            System.out.println("dataCollectedDto = " + dataCollectedDto);
+        }
+    }
 
     @Test
     public void process() {

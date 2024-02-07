@@ -44,11 +44,15 @@ public class SecurityConfig {
                                                 userInfoEndpointConfig -> userInfoEndpointConfig
                                                         .userService(customOAuth2UserService)
                                                         .oidcUserService(customOidcUserService)
-
                                         )
                                         .loginPage("/")
-                                        .defaultSuccessUrl("/")
+                                        .defaultSuccessUrl("/news")
                         )
+                        .exceptionHandling(exception -> {
+                            exception.authenticationEntryPoint((request, response, authException) -> {
+                                response.sendRedirect("/");
+                            });
+                        })
                         .build();
     }
 

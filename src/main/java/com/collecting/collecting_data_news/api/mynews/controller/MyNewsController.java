@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.*;
 public class MyNewsController {
     private final MyNewsService myNewsService;
 
-    //    @PostMapping
-    @GetMapping
+    @PostMapping
     public ApiResult<?> addMyNews(@RequestParam SearchNewspaper myNews) {
         return myNewsService.addMyMyNews(myNews);
     }

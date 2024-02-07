@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <div th:replace="~{fragments/config.html :: config}"></div>
+</head>
+<body >
+
+<div th:replace="~{fragments/menu.html :: menu}"></div>
+
+
+<div class="container" style="margin-bottom: 10px; width: 80%;">
+    <h1>뉴스 수집 목록</h1>
+
+    <div th:each="newspaperGroup : ${news}" class="row mb-4">
+        <div class="col">
+            <h2 th:text="'수집 사이트: ' + ${newspaperGroup.key}"></h2>
+            <input type="hidden" id="searchNewspaper" th:name="searchNewspaper" th:value="${newspaperGroup.key}">
+
+            <div th:each="keywordGroup : ${newspaperGroup.value}">
+                <h4 th:text="'저장된 키워드: ' + ${keywordGroup.key}"></h4>
+
+                <div th:each="news : ${keywordGroup.value}">
+                    <div class="card mb-2">
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${news.newspaper}"></h5>
+                            <a th:href="${news.href}" class="card-link" th:text="${news.title}"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <nav style="text-align: center;">
+        <ul class="pagination" th:with="start=${(newsPageable.number/maxPage)*maxPage + 1},
+                end=(${(newsPageable.totalPages == 0) ? 1 : (start + (maxPage - 1) < newsPageable.totalPages ? start + (maxPage - 1) : newsPageable.totalPages)})">
+            <li th:if="${start > 1}">
+                <button type="button"
+                        th:pageable="0"
+                        th:onclick="search(this.getAttribute('pageable'))"
+                        th:text="'<<'">
+                </button>
+            </li>
+            <li th:if="${start > 1}">
+                <button type="button"
+                        th:pageable="${start - maxPage}"
+                        th:onclick="search(this.getAttribute('pageable'))"
+                        th:text="'<'">
+                </button>
+            </li>
+
+            <li th:each="page: ${#numbers.sequence(start, end)}">
+                <button type="button"
+                        th:pageable="${page-1}"
+                        th:onclick="search(this.getAttribute('pageable'))"
+                        th:text="${page}">
+                </button>
+            </li>
+
+            <li th:if="${end < newsPageable.totalPages}">
+                <button type="button"
+                        th:pageable="${start + maxPage}"
+                        th:onclick="search(this.getAttribute('pageable'))"
+                        th:text="'>'">
+                </button>
+            </li>
+            <li th:if="${end < newsPageable.totalPages}">
+                <button type="button"
+                        th:pageable="${newsPageable.totalPages - 1}"
+                        th:onclick="search(this.getAttribute('pageable'))"
+                        th:text="'>>'">
+                </button>
+            </li>
+        </ul>
+    </nav>
+</div>
+<div th:replace="~{fragments/footer.html :: footer}"></div>
+</div> <!-- /container -->
+</body>
+</html>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script type="text/javascript">
+    function search(page) {
+        console.log($("#searchNewspaper").val());
+        const dataObj = new Object();
+
+        dataObj.searchNewspaper = $("#searchNewspaper").val();
+        dataObj.page = page;
+        dataObj.size = 20;
+
+        $.ajax({
+            url: "/news/info",
+            data: dataObj,
+            type: "GET",
+            cache: false
+        }).done(function (fragment) {
+            $("#news").replaceWith(fragment);
+        });
+    }
+
+</script>

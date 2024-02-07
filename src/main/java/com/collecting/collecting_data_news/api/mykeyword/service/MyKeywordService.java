@@ -32,7 +32,7 @@ public class MyKeywordService {
     public ApiResult addMyKeyword(String strKeyword) {
         Keyword keyword = keywordService.addKeyword(strKeyword);
 
-        Member member = authFunction.getOauthId();
+        Member member = authFunction.getMember();
         Optional<MyKeyword> optionalMyKeyword = myKeywordRepository.findByMemberAndKeyword(member, keyword);
         if (optionalMyKeyword.isPresent()) {
             throw new BusinessException(ALREADY_SAVED_KEYWORD);
@@ -45,7 +45,7 @@ public class MyKeywordService {
     }
 
     public ApiResult<?> myKeywordList() {
-        Member member = authFunction.getOauthId();
+        Member member = authFunction.getMember();
         List<MyKeywordRespDto> result = myKeywordRepository.myKeywordList(member);
         return success(result, SUCCESS, SUCCESS_CODE);
     }
