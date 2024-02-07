@@ -12,7 +12,7 @@ public class ComCode {
     public final static String FIND_FAIL = "요청을 처리하지 못했어요\n관리자에게 문의해주세요!";
     public final static int FAIL_CODE = 400;
     public final static int FORBIDDEN_CODE = 403;
-    public final static String FORBIDDEN = "권한이 없습니다.";
+    public final static String FORBIDDEN = "해당 컨텐츠에 권한이 없습니다.";
 
     public final static String AUTH_FAIL = "인증에 실패했습니다.";
     public final static int AUTH_FAIL_CODE = 401; // 인증 실패

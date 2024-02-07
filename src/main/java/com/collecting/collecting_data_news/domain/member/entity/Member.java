@@ -45,11 +45,11 @@ public class Member extends BaseTimeEntity {
     private String email;
 
     @Builder.Default
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     List<MyKeyword> myKeywords = new ArrayList<>();
 
     @Builder.Default
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     List<MyNews> myNews = new ArrayList<>();
 
     public void addMyKeywords(MyKeyword myKeyword) {

@@ -4,30 +4,35 @@ import com.collecting.collecting_data_news.api.mykeyword.service.MyKeywordServic
 import com.collecting.collecting_data_news.common.apiresult.dto.ApiResult;
 import com.collecting.collecting_data_news.scheduler.NewsDataScheduler;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("/keyword")
+import java.util.Map;
+
+@RequestMapping("/my-keyword")
 @RequiredArgsConstructor
-@RestController
+@Controller
 public class MyKeywordController {
     private final MyKeywordService keywordService;
-    private final NewsDataScheduler newsDataScheduler;
+    @ResponseBody
+    @PostMapping
+    public ApiResult<?> addKeyword(@RequestBody Map<String, String > reqBody) {
+        return keywordService.addMyKeyword(reqBody.get("keyword"));
+    }
 
-    //    @PostMapping
     @GetMapping
-    public ApiResult<?> addKeyword(@RequestParam String keyword) {
-        return keywordService.addMyKeyword(keyword);
+    public String myKeywordList(Model model) {
+        model.addAttribute("myKeywords", keywordService.myKeywordList());
+        return "view/mykeyword/list";
     }
 
-    @GetMapping("/list")
-    public ApiResult<?> myKeywordList() {
-        return keywordService.myKeywordList();
-    }
+    @ResponseBody
+    @DeleteMapping
+    public ApiResult<?> myKeywordDelete(@RequestBody Map<String, Long> reqBody) {
+        return keywordService.myKeywordDelete(reqBody.get("keyword"));
 
-    @GetMapping("/remove")
-    public ApiResult<?> myKeywordDelete(@RequestParam Long idx) {
-        newsDataScheduler.collectNewsData();
-        return keywordService.myKeywordDelete(idx);
     }
 }
+
 

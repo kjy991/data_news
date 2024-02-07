@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+import static com.collecting.collecting_data_news.common.apiresult.comcode.ComCode.FIND_FAIL;
 import static com.collecting.collecting_data_news.common.function.UtilityFunction.isValidString;
 
 

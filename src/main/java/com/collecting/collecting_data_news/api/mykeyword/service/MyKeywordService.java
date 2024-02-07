@@ -12,6 +12,7 @@ import com.collecting.collecting_data_news.domain.mykeyword.entity.MyKeyword;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 import java.util.Optional;
@@ -44,15 +45,21 @@ public class MyKeywordService {
         return success(true, SAVED_KEYWORD, SUCCESS_CODE);
     }
 
-    public ApiResult<?> myKeywordList() {
+    public List<MyKeywordRespDto> myKeywordList() {
         Member member = authFunction.getMember();
-        List<MyKeywordRespDto> result = myKeywordRepository.myKeywordList(member);
-        return success(result, SUCCESS, SUCCESS_CODE);
+        return myKeywordRepository.myKeywordList(member);
     }
 
     @Transactional
-    public ApiResult<?> myKeywordDelete(Long idx) {
-        myKeywordRepository.deleteById(idx);
+    public ApiResult<?> myKeywordDelete(Long myKeywordIdx) {
+        Member member = authFunction.getMember();
+        MyKeyword myKeyword = myKeywordRepository.findByIdxAndMember(myKeywordIdx, member);
+        if (!member.equals(myKeyword.getMember())) {
+            throw new BusinessException(FORBIDDEN);
+        }
+
+        myKeywordRepository.deleteById(myKeywordIdx);
+
         return success(true, SUCCESS, SUCCESS_CODE);
     }
 }

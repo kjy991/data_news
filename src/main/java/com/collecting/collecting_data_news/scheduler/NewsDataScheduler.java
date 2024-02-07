@@ -36,13 +36,8 @@ public class NewsDataScheduler {
      * ? 연도 (연도는 지정되지 않음)
      * 새벽4시에 유저 수락율 매일 업데이트
      */
-    @Scheduled(cron = "9 0 * * * ?")
+    @Scheduled(cron = "30 0 * * * ?")
     public void collectNewsData() {
-
-        System.out.println("naverAbstractWebDriver = " + naverAbstractWebDriver);
-
-
-
         List<KeywordDto> naverKeywordList = keywordRepository.keywordDtoList(SearchNewspaper.NAVER);
         CompletableFuture<List<DataCollectedDto>> naverFuture = CompletableFuture.supplyAsync(() ->
                 naverAbstractWebDriver.naverProcess(naverKeywordList));

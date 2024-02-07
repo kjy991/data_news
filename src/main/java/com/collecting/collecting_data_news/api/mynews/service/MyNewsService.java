@@ -40,10 +40,9 @@ public class MyNewsService {
         return success(true, SAVED_MY_NEWS, SUCCESS_CODE);
     }
 
-    public ApiResult<?> myNewsList() {
+    public List<MyNewsRespDto> myNewsList() {
         Member member = authFunction.getMember();
-        List<MyNewsRespDto> result = myNewsRepository.myNewsList(member);
-        return success(result, SUCCESS, SUCCESS_CODE);
+        return myNewsRepository.myNewsList(member);
     }
 
     @Transactional
