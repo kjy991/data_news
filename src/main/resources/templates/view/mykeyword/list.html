@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <div th:replace="~{fragments/config.html :: config}"></div>
+</head>
+<body>
+
+<div th:replace="~{fragments/menu.html :: menu}"></div>
+
+
+<div class="container" style="margin-bottom: 10px; width: 80%;">
+    <h1>내 키워드 리스트 </h1>
+
+    <fieldset>
+        <div id="keywordList">
+            <div>
+                <label for="keyword">키워드 저장</label>
+                <input type="text" id="keyword" name="keyword" placeholder="저장할 키워드를 입력해주세요">
+                <button class="btn btn-outline-success my-2 my-sm-0" onclick="addKeyword()">키워드 저장</button>
+            </div>
+
+
+            <h5>저장한 키워드 리스트</h5>
+            <div th:each="myKeyword, iterStat : ${myKeywords}">
+                <input type="hidden" th:value="${myKeyword.idx}" readOnly>
+                <input type="text" th:value="${myKeyword.keyword}" readOnly>
+                <button class="remove-item" th:attr="data-keyword=${myKeyword.idx}"
+                        onclick="deleteMyKeyword(this)">삭제
+                </button>
+            </div>
+        </div>
+    </fieldset>
+
+
+</div>
+<div th:replace="~{fragments/footer.html :: footer}"></div>
+</div> <!-- /container -->
+</body>
+</html>
+<script type="text/javascript">
+    function addKeyword() {
+        const dataObj = {
+            "keyword": $("#keyword").val()
+        };
+
+        console.log(dataObj);
+
+        $.ajax({
+            url: "/my-keyword",
+            data: JSON.stringify(dataObj),
+            type: "POST",
+            contentType: "application/json",
+            cache: false,
+            success: function () {
+                alert("키워드 저장 성공")
+                window.location.href = "/my-keyword";
+            },
+            error: function (xhr, status, error) {
+                let errorMessage = "";
+                if (xhr.status === 400) {
+                    const responseJSON = JSON.parse(xhr.responseText);
+                    if (responseJSON.result) {
+                        errorMessage = responseJSON.result.message; // 에러 메시지 추출
+                    }
+                } else {
+                    errorMessage = status + "\n" + error;
+                }
+                alert(errorMessage);
+            }
+        });
+    }
+
+
+    function deleteMyKeyword(button) {
+        const keyword = button.getAttribute('data-keyword');
+        const dataObj = {"keyword": keyword};
+
+        $.ajax({
+            url: "/my-keyword",
+            data: JSON.stringify(dataObj),
+            type: "DELETE",
+            contentType: "application/json",
+            cache: false,
+            success: function () {
+                alert("삭제 성공")
+                window.location.href = "/my-keyword";
+            },
+            error: function (xhr, status, error) {
+                let errorMessage = "";
+                if (xhr.status === 400) {
+                    const responseJSON = JSON.parse(xhr.responseText);
+                    if (responseJSON.result) {
+                        errorMessage = responseJSON.result.message; // 에러 메시지 추출
+                    }
+                } else {
+                    errorMessage = status + "\n" + error;
+                }
+                alert(errorMessage);
+            }
+        });
+    }
+</script>

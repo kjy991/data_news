@@ -3,7 +3,6 @@ spring:
     oauth2:
       client:
         registration:
-
           google:
             client-id: 197334622192-2ohlkmq4gl71m3v4qttq3ub1erktco6j.apps.googleusercontent.com
             client-secret: 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
@@ -34,15 +33,11 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update # 어플리케이션을 시작할 때 데이터베이스를 초기화하고 다시 테이블 생성
-    properties:
-      hibernate:
-        format_sql: true # ??? ?? ?? SQL ? ?? ?? ???
-        show_sql: true # jpa ? hibernate ? ?? CRUD ? ?? ?? ?? CRUD ? SQL ? ???? ?? ??.
-        use_sql_comments: true
-
-#logging.level:
-#  org.hibernate.SQL: debug
-
+#    properties:
+#      hibernate:
+#        format_sql: true # ??? ?? ?? SQL ? ?? ?? ???
+#        show_sql: true # jpa ? hibernate ? ?? CRUD ? ?? ?? ?? CRUD ? SQL ? ???? ?? ??.
+#        use_sql_comments: true
 
 
 #  h2:
