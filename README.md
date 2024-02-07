@@ -15,10 +15,10 @@
 - 뷰 화면 개선 
 
 ## 배포 시나리오
-1. Git에서 변경사항이 발생하면 Travis를 통해 자동 배포됩니다.
+1. Git에서 push 화면 Travis로 빌드 됩니다.
 2. Travis는 Git의 main 브랜치로 푸시될 때만 변경사항을 받습니다.
 3. Travis.yml 파일에서 AWS S3 및 CodeDeploy 설정을 합니다.
-4. AWS에서 CodeDeploy를 설정한 후 EC2와 연결합니다.
+4. AWS에서 S3 - CodeDeploy를 설정한 후 EC2와 연결합니다.
 5. EC2에서 CLI 명령어를 사용하여 저장된 프로젝트를 빌드하는 명령 파일을 실행합니다.
 
 ## 배포 순서
