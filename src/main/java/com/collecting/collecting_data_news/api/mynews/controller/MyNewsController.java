@@ -8,26 +8,29 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RequestMapping("/my-news")
 @RequiredArgsConstructor
 @Controller
 public class MyNewsController {
     private final MyNewsService myNewsService;
-
+    @ResponseBody
     @PostMapping
-    public ApiResult<?> addMyNews(@RequestParam SearchNewspaper myNews) {
-        return myNewsService.addMyMyNews(myNews);
+    public ApiResult<?> addMyNews(@RequestBody Map<String, SearchNewspaper> reqBody) {
+        return myNewsService.addMyMyNews(reqBody.get("searchNewspaper"));
     }
 
     @GetMapping
     public String myNewsList(Model model) {
-        model.addAttribute("keywords", myNewsService.myNewsList());
-        return "null";
+        model.addAttribute("myNews", myNewsService.myNewsList());
+        return "view/mynews/list";
     }
 
+    @ResponseBody
     @DeleteMapping
-    public ApiResult<?> myMyNewsDelete(@RequestParam Long idx) {
-        return myNewsService.myNewsDelete(idx);
+    public ApiResult<?> myMyNewsDelete(@RequestBody Map<String, SearchNewspaper> reqBody) {
+        return myNewsService.myNewsDelete(reqBody.get("searchNewspaper"));
     }
 }
 

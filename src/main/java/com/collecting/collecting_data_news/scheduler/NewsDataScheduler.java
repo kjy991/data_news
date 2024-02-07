@@ -9,15 +9,22 @@ import com.collecting.collecting_data_news.selenium.service.GoogleAbstractWebDri
 import com.collecting.collecting_data_news.selenium.service.NaverAbstractWebDriver;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Slf4j
 @RequiredArgsConstructor
+@EnableScheduling
 @Component
 public class NewsDataScheduler {
     private final NaverAbstractWebDriver naverAbstractWebDriver;
@@ -27,42 +34,81 @@ public class NewsDataScheduler {
 
     private final NewsDataJdbcRepository newsDataJdbcRepository;
 
-    /**
-     * 0 분
-     * 0 시
-     * 4 일 (하루 중 4시에 실행)
-     * * 월 (모든 월)
-     * * 요일 (매일)
-     * ? 연도 (연도는 지정되지 않음)
-     * 새벽4시에 유저 수락율 매일 업데이트
-     */
-    @Scheduled(cron = "30 0 * * * ?")
+    @Scheduled(cron = "0 0 0/1 * * *")
     public void collectNewsData() {
-        List<KeywordDto> naverKeywordList = keywordRepository.keywordDtoList(SearchNewspaper.NAVER);
-        CompletableFuture<List<DataCollectedDto>> naverFuture = CompletableFuture.supplyAsync(() ->
-                naverAbstractWebDriver.naverProcess(naverKeywordList));
+        try {
+            System.out.println("collectNewsData 실행");
 
-        List<KeywordDto> daumKeywordList = keywordRepository.keywordDtoList(SearchNewspaper.DAUM);
-        CompletableFuture<List<DataCollectedDto>> daumFuture = CompletableFuture.supplyAsync(() ->
-                daumAbstractWebDriver.daumProcess(daumKeywordList));
+            List<KeywordDto> googleKeywordList = keywordRepository.keywordDtoList(SearchNewspaper.GOOGLE);
+            List<KeywordDto> naverKeywordList = keywordRepository.keywordDtoList(SearchNewspaper.NAVER);
+            List<KeywordDto> daumKeywordList = keywordRepository.keywordDtoList(SearchNewspaper.DAUM);
 
-        List<KeywordDto> googleKeywordList = keywordRepository.keywordDtoList(SearchNewspaper.GOOGLE);
-        CompletableFuture<List<DataCollectedDto>> googleFuture = CompletableFuture.supplyAsync(() ->
-                googleAbstractWebDriver.googleProcess(googleKeywordList));
 
-        CompletableFuture<List<DataCollectedDto>> allFutures = CompletableFuture.allOf(naverFuture, daumFuture, googleFuture)
-                .thenApply(ignored -> {
-                    List<DataCollectedDto> dataCollectedDtoList = new ArrayList<>();
-                    dataCollectedDtoList.addAll(naverFuture.join());
-                    dataCollectedDtoList.addAll(daumFuture.join());
-                    dataCollectedDtoList.addAll(googleFuture.join());
-                    return dataCollectedDtoList;
-                });
+            CompletableFuture<List<DataCollectedDto>> naverFuture = CompletableFuture.supplyAsync(() ->
+                    naverAbstractWebDriver.naverProcess(naverKeywordList));
 
-        List<DataCollectedDto> result = allFutures.join();
+            CompletableFuture<List<DataCollectedDto>> daumFuture = CompletableFuture.supplyAsync(() ->
+                    daumAbstractWebDriver.daumProcess(daumKeywordList));
 
-        if (!result.isEmpty()) {
-            newsDataJdbcRepository.batchInsertNewsData(result);
+            CompletableFuture<List<DataCollectedDto>> googleFuture = CompletableFuture.supplyAsync(() ->
+                    googleAbstractWebDriver.googleProcess(googleKeywordList));
+
+            CompletableFuture<List<DataCollectedDto>> allFutures = CompletableFuture.allOf(naverFuture, daumFuture, googleFuture)
+                    .thenApply(ignored -> Stream.of(naverFuture, daumFuture, googleFuture)
+                            .map(CompletableFuture::join)
+                            .flatMap(List::stream)
+                            .collect(Collectors.toList()))
+                    .exceptionally(ex -> {
+                        log.error("An exception occurred while collecting news data: {}", ex.getMessage());
+                        return Collections.emptyList();
+                    });
+            List<DataCollectedDto> result = allFutures.join();
+
+            if (!result.isEmpty()) {
+                newsDataJdbcRepository.batchInsertNewsData(result);
+            }
+            System.out.println("collectNewsData 종료");
+        } catch (Exception e) {
+            throw e;
         }
+
     }
 }
+
+
+//
+//for (KeywordDto keywordDto : naverKeywordList) {
+//        System.out.println("naverKeywordList = " + keywordDto);
+//        }
+//        for (KeywordDto keywordDto : daumKeywordList) {
+//        System.out.println("daumKeywordList = " + keywordDto);
+//        }
+//        for (KeywordDto keywordDto : googleKeywordList) {
+//        System.out.println("googleKeywordList = " + keywordDto);
+//        }
+//        List<DataCollectedDto> naverFuture = naverAbstractWebDriver.naverProcess(naverKeywordList);
+//        System.out.println("naverFuture.size() = " + naverFuture.size());
+//        for (DataCollectedDto dataCollectedDto : naverFuture) {
+//        System.out.println("dataCollectedDto = " + dataCollectedDto);
+//        }
+//        List<DataCollectedDto> daumFuture = daumAbstractWebDriver.daumProcess(daumKeywordList);
+//        System.out.println("daumFuture.size() = " + daumFuture.size());
+//        for (DataCollectedDto dataCollectedDto : daumFuture) {
+//        System.out.println("dataCollectedDto = " + dataCollectedDto);
+//        }
+//        List<DataCollectedDto> googleFuture = googleAbstractWebDriver.googleProcess(googleKeywordList);
+////        System.out.println("googleFuture.size() = " + googleFuture.size());
+//        for (DataCollectedDto dataCollectedDto : googleFuture) {
+//        System.out.println("dataCollectedDto = " + dataCollectedDto);
+//        }
+//
+//        List<DataCollectedDto> result = new ArrayList<>();
+//        if (!naverFuture.isEmpty()) {
+//        result.addAll(naverFuture);
+//        }
+//        if (!daumFuture.isEmpty()) {
+//        result.addAll(daumFuture);
+//        }
+//        if (googleFuture != null) {
+//        result.addAll(googleFuture);
+//        }

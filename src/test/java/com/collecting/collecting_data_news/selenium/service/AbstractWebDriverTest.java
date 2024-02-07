@@ -1,4 +1,4 @@
-package com.collecting.collecting_data_news.selenium;
+package com.collecting.collecting_data_news.selenium.service;
 
 import com.collecting.collecting_data_news.scheduler.NewsDataJdbcRepository;
 import com.collecting.collecting_data_news.selenium.dto.DataCollectedDto;

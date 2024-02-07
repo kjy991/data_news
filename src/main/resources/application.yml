@@ -3,6 +3,7 @@ spring:
     oauth2:
       client:
         registration:
+
           google:
             client-id: 197334622192-2ohlkmq4gl71m3v4qttq3ub1erktco6j.apps.googleusercontent.com
             client-secret: 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
@@ -38,6 +39,10 @@ spring:
 #        format_sql: true # ??? ?? ?? SQL ? ?? ?? ???
 #        show_sql: true # jpa ? hibernate ? ?? CRUD ? ?? ?? ?? CRUD ? SQL ? ???? ?? ??.
 #        use_sql_comments: true
+
+#logging.level:
+#  org.hibernate.SQL: debug
+
 
 
 #  h2:

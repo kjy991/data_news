@@ -46,8 +46,13 @@ public class MyNewsService {
     }
 
     @Transactional
-    public ApiResult<?> myNewsDelete(Long idx) {
-        myNewsRepository.deleteById(idx);
+    public ApiResult<?> myNewsDelete(SearchNewspaper searchNewspaper) {
+        Member member = authFunction.getMember();
+        Optional<MyNews> optionalMyNews = myNewsRepository.findByMemberAndSearchNewsPaper(member, searchNewspaper);
+        if (optionalMyNews.isEmpty()) {
+            throw new BusinessException(ALREADY_DELETE_DATA);
+        }
+        myNewsRepository.delete(optionalMyNews.get());
         return success(true, SUCCESS, SUCCESS_CODE);
     }
 }

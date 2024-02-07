@@ -15,17 +15,23 @@
     <fieldset>
         <div id="keywordList">
             <div>
-                <label for="keyword">키워드 저장</label>
-                <input type="text" id="keyword" name="keyword" placeholder="저장할 키워드를 입력해주세요">
-                <button class="btn btn-outline-success my-2 my-sm-0" onclick="addKeyword()">키워드 저장</button>
+                <label for="searchNewspaper">신문사 저장</label>
+                <select id="searchNewspaper" class="form-control mr-sm-2">
+                    <option value="">수집할 사이트</option>
+                    <option th:each="status : ${T(com.collecting.collecting_data_news.domain.mynews.enums.SearchNewspaper).values()}"
+                            th:value="${status}"
+                            th:text="${status}">option
+                    </option>
+                </select>
+                <button class="btn btn-outline-success my-2 my-sm-0" onclick="addKeyword()">신문사 저장</button>
             </div>
 
 
             <h5>저장한 키워드 리스트</h5>
-            <div th:each="myKeyword : ${myKeywords}">
-                <input type="hidden" th:value="${myKeyword.idx}" readOnly>
-                <input type="text" th:value="${myKeyword.keyword}" readOnly>
-                <button class="remove-item" th:attr="data-keyword=${myKeyword.idx}"
+            <div th:each="news: ${myNews}">
+                <input type="hidden" th:value="${news.idx}" readOnly>
+                <input type="text" th:value="${news.searchNewspaper}" readOnly>
+                <button class="remove-item" th:attr="data-keyword=${news.searchNewspaper}"
                         onclick="deleteMyKeyword(this)">삭제
                 </button>
             </div>
@@ -41,20 +47,20 @@
 <script type="text/javascript">
     function addKeyword() {
         const dataObj = {
-            "keyword": $("#keyword").val()
+            "searchNewspaper": $("#searchNewspaper").val()
         };
 
         console.log(dataObj);
 
         $.ajax({
-            url: "/my-keyword",
+            url: "/my-news",
             data: JSON.stringify(dataObj),
             type: "POST",
             contentType: "application/json",
             cache: false,
             success: function () {
-                alert("키워드 저장 성공")
-                window.location.href = "/my-keyword";
+                alert("수집할 신문사 저장 성공")
+                window.location.href = "/my-news";
             },
             error: function (xhr, status, error) {
                 let errorMessage = "";
@@ -73,18 +79,18 @@
 
 
     function deleteMyKeyword(button) {
-        const keyword = button.getAttribute('data-keyword');
-        const dataObj = {"keyword": keyword};
+        const searchNewspaper = button.getAttribute('data-keyword');
+        const dataObj = {"searchNewspaper": searchNewspaper};
 
         $.ajax({
-            url: "/my-keyword",
+            url: "/my-news",
             data: JSON.stringify(dataObj),
             type: "DELETE",
             contentType: "application/json",
             cache: false,
             success: function () {
                 alert("삭제 성공")
-                window.location.href = "/my-keyword";
+                window.location.href = "/my-news";
             },
             error: function (xhr, status, error) {
                 let errorMessage = "";

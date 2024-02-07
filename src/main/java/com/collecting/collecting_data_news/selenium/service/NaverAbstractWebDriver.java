@@ -17,6 +17,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import static com.collecting.collecting_data_news.domain.mynews.enums.SearchNewspaper.*;
 import static com.collecting.collecting_data_news.selenium.elements.SeleniumFindElements.*;
@@ -34,7 +35,7 @@ public class NaverAbstractWebDriver extends AbstractWebDriver implements WebDriv
     }
 
 
-    public List<DataCollectedDto> naverProcess(List<KeywordDto> keywords) {
+    public synchronized List<DataCollectedDto> naverProcess(List<KeywordDto> keywords) {
         return process(keywords);
     }
 

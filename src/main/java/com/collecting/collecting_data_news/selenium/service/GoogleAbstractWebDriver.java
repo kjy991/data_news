@@ -27,10 +27,11 @@ import static com.collecting.collecting_data_news.selenium.elements.SeleniumFind
 @Primary
 @Component
 public class GoogleAbstractWebDriver extends AbstractWebDriver implements WebDriverOperations {
+
     @Value("${chrome.googleUrl}")
     private String GOOGLE_URL;
 
-    public List<DataCollectedDto> googleProcess(List<KeywordDto> keywords) {
+    public synchronized List<DataCollectedDto> googleProcess(List<KeywordDto> keywords) {
         return process(keywords);
     }
 

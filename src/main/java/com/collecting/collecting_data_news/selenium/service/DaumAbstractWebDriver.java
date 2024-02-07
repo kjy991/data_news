@@ -28,7 +28,7 @@ public class DaumAbstractWebDriver extends AbstractWebDriver implements WebDrive
     @Value("${chrome.daumUrl}")
     private String DAUM_URL;
 
-    public List<DataCollectedDto> daumProcess(List<KeywordDto> keywords) {
+    public synchronized List<DataCollectedDto> daumProcess(List<KeywordDto> keywords) {
         return process(keywords);
     }
 

@@ -23,7 +23,7 @@ public abstract class AbstractWebDriver implements WebDriverOperations {
     private String CHROME_DRIVER_PATH;
 
     @Override
-    public List<DataCollectedDto> process(List<KeywordDto> keywords) {
+    public synchronized List<DataCollectedDto> process(List<KeywordDto> keywords) {
         try {
             setupWebDriver();
             return Optional.ofNullable(keywords)
@@ -70,6 +70,6 @@ public abstract class AbstractWebDriver implements WebDriverOperations {
                 .until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector(cssSelector)));
     }
 
-    // 하위 클래스에서 구현해야 할 추상 메서드
+
     protected abstract String getNewsUrl();
 }

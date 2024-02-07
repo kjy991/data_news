@@ -41,6 +41,7 @@ public class MyNewsCustomImpl implements MyNewsCustom {
                 ))
                 .from(myNews)
                 .innerJoin(myNews.member, member)
+                .where(member.eq(myMember))
                 .fetch();
     }
 
